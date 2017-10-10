@@ -1,5 +1,5 @@
 /*****************************
-  *    Project Name:pcapwriter
+  *    Project Name:pcap_file_generator
   *    Author:V.Koroy
   *  Пт. окт. 6 15:32:33 MSK 2017
   * gcc -o pcap_file_generator pcap_file_generator.c
