@@ -15,7 +15,7 @@
 ## void lpcap_close_file( PCAPFILE * f_pcp )
 Эта функция закрытия файла
 На вход ей поступают :
- 1. PCAPFILE * f_pcp  - указатель на открытый и запичсанный файл
+ 1. PCAPFILE * f_pcp  - указатель на открытый и записанный файл
 
 
 
@@ -24,7 +24,6 @@
   int i=0;
   const int  PKTS_COUNT = 212000;
   int PKTS_LEN =  540;
-  int  TIME_BETWEEN_PACKETS  =  283111;/*in microseconds*/
   static ethernet_data_t  eda;
   eda.len = PKTS_LEN;
 
