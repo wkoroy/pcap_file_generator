@@ -125,7 +125,7 @@ int main()
   udp_f->cksum = ip_cksum(0, (void*)udp_f, sizeof(udp_packet_t));
   memset(udp_f->data, 0xab,  data_len);
 
-  eda.data = eth_f; 
+  eda.data = (void *) eth_f; 
 //---------------------------------------------------------------------------------
 #endif
 
