@@ -8,7 +8,7 @@
 
 #include "pcap_file_generator.h"
 #include "ethernet.h"
-
+ 
 
 // Рассчёт контрольной суммы для IP (и других протоколов)
 uint16_t ip_cksum(uint32_t sum, uint8_t *buf, size_t len)
@@ -32,6 +32,35 @@ uint16_t ip_cksum(uint32_t sum, uint8_t *buf, size_t len)
 
     // Снова конвертируем в big endian и берём дополнение
     return ~htons((uint16_t)sum);
+}
+
+// build ethernet frame
+void  build_udp_frame(network_packet_frame_t *nwp , eth_frame_t * eth_f )
+{
+  if(!nwp || !eth_f) return;
+  memcpy(eth_f->to_addr , nwp->dst_mac, sizeof(eth_f->to_addr));
+  memcpy(eth_f->from_addr ,  nwp->src_mac, sizeof(eth_f->from_addr ));
+  eth_f->type = ETH_TYPE_IP ;
+  const int data_len = nwp->data_len;
+
+  ip_packet_t * ip_f =(ip_packet_t *) eth_f->data;
+  ip_f->ver_head_len = 0x45;
+  ip_f->total_len = data_len + sizeof(ip_packet_t)+sizeof(udp_packet_t) ;
+  ip_f->fragment_id = 0;
+  ip_f->flags_framgent_offset = 0;
+  ip_f->ttl = 64;
+  ip_f->protocol = IP_PROTOCOL_UDP;
+  ip_f->cksum = ip_cksum(0, (void*)ip_f, sizeof(ip_packet_t));
+  ip_f->from_addr=inet_addr( nwp->src_ip );
+  ip_f->to_addr= inet_addr( nwp->dst_ip );
+  
+  udp_packet_t  * udp_f = (udp_packet_t  *) ip_f->data; 
+  udp_f->from_port = htons( nwp->src_port );
+  udp_f->to_port = htons( nwp->dst_port );  
+  udp_f->len = htons(data_len);
+  udp_f->cksum = ip_cksum(0, (void*)udp_f, sizeof(udp_packet_t));
+  memcpy(udp_f->data, nwp->data, nwp->data_len);
+  return; 
 }
  
 PCAPFILE * lpcap_create(char * file_path )
