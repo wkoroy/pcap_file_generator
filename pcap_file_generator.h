@@ -1,6 +1,6 @@
 #ifndef PCAP_GEN_H
 #define PCAP_GEN_H
-
+#pragma pack(1)
 typedef FILE  PCAPFILE;
 
 typedef struct ethernet_data_s {
@@ -29,7 +29,7 @@ typedef struct pcaprec_hdr_s {
 
 typedef struct pcaprec_hdr_and_data_s {
        pcaprec_hdr_t pcp_rec_hdr;
-       uint8_t packet_data[1440];
+       uint8_t packet_data[1800];
 } pcaprec_hdr_and_data_t;
 
 #endif

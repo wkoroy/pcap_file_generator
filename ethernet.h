@@ -25,7 +25,7 @@ typedef struct eth_frame {
     uint8_t to_addr[6]; // адрес получателя
     uint8_t from_addr[6]; // адрес отправителя
     uint16_t type; // протокол
-    uint8_t *data;
+    uint8_t  data[];
 } eth_frame_t;
 
 #define ARP_HW_TYPE_ETH        htons(0x0001)
@@ -64,7 +64,7 @@ typedef struct ip_packet {
     uint16_t cksum; //контрольная сумма заголовка
     uint32_t from_addr; //IP-адрес отправителя
     uint32_t to_addr; //IP-адрес получателя
-    uint8_t *data;
+    uint8_t data[];
 } ip_packet_t;
 
 
@@ -84,7 +84,7 @@ typedef struct udp_packet {
     uint16_t to_port;
     uint16_t len;
     uint16_t cksum;
-    uint8_t *data;
+    uint8_t data[];
 } udp_packet_t;
 
 #endif
