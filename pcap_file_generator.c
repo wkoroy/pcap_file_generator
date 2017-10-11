@@ -90,13 +90,12 @@ void lpcap_close_file( PCAPFILE * f_pcp )
 int main()
 {
   int i=0;
-  const int  PKTS_COUNT = 2;
-  int PKTS_LEN =  540;
-  uint8_t e_data[PKTS_LEN];
-  int  TIME_BETWEEN_PACKETS  =  283111;/*in microseconds*/
+  const int  PKTS_COUNT = 20001;
+  //int  TIME_BETWEEN_PACKETS  =  283111;/*in microseconds*/
   static ethernet_data_t  eda;
-//-- Create ETHERNET FRAME --------------------------
-   uint8_t fdata[1700];  
+//-- Create ETHERNET FRAME UDP --------------------------
+#if 1
+  static uint8_t fdata[1700];  
   eth_frame_t * eth_f =(eth_frame_t *) fdata;
   uint8_t  m_addr[] = {0xef,0xab,0x03, 0xdc,0xee,0x11};
   memcpy(eth_f->to_addr , m_addr, sizeof(eth_f->to_addr));
@@ -104,7 +103,7 @@ int main()
   m_addr[5] = 0x88;
   memcpy(eth_f->from_addr , m_addr, sizeof(eth_f->from_addr ));
   eth_f->type = ETH_TYPE_IP ;
- #if 1
+ 
   
   const int data_len = 1448+18;
 
@@ -116,8 +115,8 @@ int main()
   ip_f->ttl = 64;
   ip_f->protocol = IP_PROTOCOL_UDP;
   ip_f->cksum = ip_cksum(0, (void*)ip_f, sizeof(ip_packet_t));
-  ip_f->from_addr=inet_addr("192.168.0.1");//___inet_addr(0x01,0x00,0xa8,0xc0); //inet_addr(0xc0,0xa8,0x00, 0x01);
-  ip_f->to_addr= inet_addr("192.168.0.12");//___inet_addr(0x02,0x00,0xa8,0xc0);
+  ip_f->from_addr=inet_addr("192.168.0.1");
+  ip_f->to_addr= inet_addr("192.168.0.12");
   
   udp_packet_t  * udp_f = (udp_packet_t  *) ip_f->data; 
   udp_f->from_port = htons(0x34);
@@ -125,16 +124,17 @@ int main()
   udp_f->len = htons(data_len);
   udp_f->cksum = ip_cksum(0, (void*)udp_f, sizeof(udp_packet_t));
   memset(udp_f->data, 0xab,  data_len);
-//--------------------------------------
-#endif
 
   eda.data = eth_f; 
+//---------------------------------------------------------------------------------
+#endif
+
+  
   eda.len = 1500;
 
   PCAPFILE * pfl = lpcap_create("./pcaplibtestfile.pcap");
   for( i=0;i< PKTS_COUNT;i++ )
   {
-   
    lpcap_write_data( pfl , &eda , i, 0 );
   }
   lpcap_close_file( pfl );
