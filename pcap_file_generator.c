@@ -68,9 +68,12 @@ int main()
   int i=0;
   const int  PKTS_COUNT = 212000;
   int PKTS_LEN =  540;
+  uint8_t e_data[PKTS_LEN];
   int  TIME_BETWEEN_PACKETS  =  283111;/*in microseconds*/
   static ethernet_data_t  eda;
   eda.len = PKTS_LEN;
+  eda.data = e_data;
+
 
   PCAPFILE * pfl = lpcap_create("./pcaplibtestfile.pcap");
   for( i=0;i< PKTS_COUNT;i++ )

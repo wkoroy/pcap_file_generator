@@ -5,7 +5,7 @@ typedef FILE  PCAPFILE;
 
 typedef struct ethernet_data_s {
         uint32_t len;   
-        uint8_t data[1440];
+        uint8_t *data;
 } ethernet_data_t;
 
 
