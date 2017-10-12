@@ -16,7 +16,7 @@
 int main()
 {
   int i=0;
-  const int  PKTS_COUNT = 20001;
+  const int  PKTS_COUNT = 2000100;
   const int udp_data_sz = 1440;// udp data size
   ethernet_data_t eda;
   eda.len = udp_data_sz +(sizeof(eth_frame_t)+sizeof(ip_packet_t))+8;//34 -  headers len
