@@ -73,7 +73,7 @@ PCAPFILE * lpcap_create(char * file_path )
    p_hdr_w.sigfigs = 0;
    p_hdr_w.snaplen = 262144;
    p_hdr_w.network = 1; 
-   pcaprec_hdr_and_data_t  prec_frame_w;
+   
 
 
    PCAPFILE *f_pcp = fopen(file_path  , "wb");
@@ -81,7 +81,9 @@ PCAPFILE * lpcap_create(char * file_path )
    {
       int res_wr = 0;
       res_wr =  fwrite(&p_hdr_w , sizeof(p_hdr_w) , 1, f_pcp );
-      return f_pcp;
+      if(res_wr)
+        return f_pcp;
+     return NULL;
    } 
    return NULL; 
 }
