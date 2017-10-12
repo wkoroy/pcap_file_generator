@@ -35,17 +35,17 @@ uint16_t ip_cksum(uint32_t sum, uint8_t *buf, size_t len)
 }
 
 // build ethernet frame
-void  build_udp_frame(network_packet_frame_t *nwp , eth_frame_t * eth_f )
+void  build_udp_frame(eth_frame_t * eth_f , network_packet_frame_t *nwp )
 {
   if(!nwp || !eth_f) return;
   memcpy(eth_f->to_addr , nwp->dst_mac, sizeof(eth_f->to_addr));
   memcpy(eth_f->from_addr ,  nwp->src_mac, sizeof(eth_f->from_addr ));
   eth_f->type = ETH_TYPE_IP ;
-  const int data_len = nwp->data_len;
+  const int data_len = nwp->data_len + 8;
 
   ip_packet_t * ip_f =(ip_packet_t *) eth_f->data;
   ip_f->ver_head_len = 0x45;
-  ip_f->total_len = data_len + sizeof(ip_packet_t)+sizeof(udp_packet_t) ;
+  ip_f->total_len =  htons(data_len + sizeof(ip_packet_t)+sizeof(udp_packet_t));
   ip_f->fragment_id = 0;
   ip_f->flags_framgent_offset = 0;
   ip_f->ttl = 64;

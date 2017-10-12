@@ -2,6 +2,8 @@
 #define ETHERNET_H
 
 #include <arpa/inet.h>
+#pragma pack(1)
+
 #if 0
 // Перекодирование word'а
 #define ___htons(a)            ((((a)>>8)&0xff)|(((a)<<8)&0xff00))
@@ -75,7 +77,7 @@ typedef struct icmp_echo_packet {
     uint16_t cksum;
     uint16_t id;
     uint16_t seq;
-    uint8_t *data;
+    uint8_t data[];
 } icmp_echo_packet_t;
 
 // UDP-пакет
@@ -99,6 +101,6 @@ typedef struct network_packet_frame {
 } network_packet_frame_t;
 
 
-void  build_udp_frame(network_packet_frame_t *nwp , eth_frame_t * eth_f );
+void  build_udp_frame(eth_frame_t * eth_f , network_packet_frame_t *nwp );
 
 #endif
