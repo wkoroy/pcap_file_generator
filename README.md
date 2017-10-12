@@ -17,7 +17,7 @@
 На вход ей поступают :
  1. PCAPFILE * f_pcp  - указатель на открытый и записанный файл
 
-###void  build_udp_frame(eth_frame_t * eth_f , network_packet_frame_t *nwp );
+## void  build_udp_frame(eth_frame_t * eth_f , network_packet_frame_t *nwp );
 Функция генерации  пакета  ethernet данных  ethernet_data_t  на основе данных  из  network_packet_frame_t 
 На вход ей поступают :
 1. Указатель     на экземпляр структуры eth_frame_t  eth_f  (экземпляр  должен быть создан заранее)
