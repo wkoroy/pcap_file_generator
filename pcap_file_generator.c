@@ -101,7 +101,7 @@ int lpcap_write_data( PCAPFILE * f_pcp ,  ethernet_data_t * eth_data, uint32_t c
     if(res_wr)
     {
            memcpy((void *)prec_frame_w.packet_data , (void *)eth_data->data ,  ( eth_data->len ));
-           res_wr |=  fwrite(&prec_frame_w.packet_data , prec_frame_w.pcp_rec_hdr.orig_len , 1, f_pcp ); 
+           res_wr &=  fwrite(&prec_frame_w.packet_data , prec_frame_w.pcp_rec_hdr.orig_len , 1, f_pcp ); 
     } 
    return res_wr;
 }
