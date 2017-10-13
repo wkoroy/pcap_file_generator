@@ -53,31 +53,4 @@ int  lpcap_read_frame_record(PCAPFILE * pfl , pcaprec_hdr_and_data_t * phdr)
   }
   return res_rd;
 }
-/*
-   pcap_hdr_t  p_hdr;
-   pcaprec_hdr_and_data_t  prec_frame;
-   printf("\nhello   V.Koroy!\n");
-   
-    FILE *pcp_r = fopen("./testpcap.pcap" , "rb"); 
-   //FILE *pcp_r = fopen("./test2pcp.pcap" , "rb");  
-   // FILE *pcp_r = fopen("./testpcapfile1.pcap" , "rb");
-   fread(&p_hdr , sizeof(p_hdr) ,1,pcp_r  );
-   print_hdr(&p_hdr);
 
-   int res_read = 0;
-   int pack_counter = 0;
-   do
-   {
-     res_read =  fread(&prec_frame.pcp_rec_hdr , sizeof(prec_frame.pcp_rec_hdr) ,1,pcp_r  );
-     if( res_read ) 
-     {
-        pack_counter ++;
-        printf("\n\n ПАкет номер %d\n",pack_counter);
-        print_rec_hdr(&prec_frame.pcp_rec_hdr );
-        res_read =  fread( prec_frame.packet_data , prec_frame.pcp_rec_hdr.orig_len ,1,pcp_r  );
-        print_pack_data(prec_frame.packet_data , prec_frame.pcp_rec_hdr.orig_len );
-     }
-   
-   }
-   while(res_read > 0);
-*/
