@@ -1,5 +1,5 @@
 ### pcap_file_generator
-Эта библиотека предназначена для генерации файлов  формата PCAP .Также поддерживается генерация UDP  пакетов
+Эта библиотека предназначена для генерации файлов  и чтения формата PCAP .Также поддерживается генерация UDP  пакетов
 
 Функции:
 ## PCAPFILE * lpcap_create(char * file_path )
@@ -17,11 +17,22 @@
 На вход ей поступают :
  1. PCAPFILE * f_pcp  - указатель на открытый и записанный файл
 
-## void  build_udp_frame(eth_frame_t * eth_f , network_packet_frame_t *nwp );
+## void  build_udp_frame(eth_frame_t * eth_f , network_packet_frame_t * nwp );
 Функция генерации  пакета  ethernet-ip-udp данных  ethernet_data_t  на основе данных  из  network_packet_frame_t 
 На вход ей поступают :
 1. Указатель     на экземпляр структуры eth_frame_t  eth_f  (экземпляр  должен быть создан заранее)
 2. network_packet_frame_t *nwp указатель на экземпляр структуры с нанными для Ethernet-ip-udp пакета
+
+## PCAPFILE * lpcap_open(char * file_path );
+Функция открытия файла. Если файл не содержит признаков PCAP  формата - возвращается 0, как и в других ошибочных ситуациях
+
+## int   lpcap_read_header(PCAPFILE * pfl , pcap_hdr_t * phdr);
+Функция  чтения заголовка файла  по дескриптору PCAPFILE * pfl  уже открытого файла в  pcap_hdr_t * phdr
+phdr должен указывать на существующую область памяти. Возвращает 0 при ошибке
+
+## int  lpcap_read_frame_record(PCAPFILE * pfl , pcaprec_hdr_and_data_t * phdr);
+Функция  чтения фрейма данных  файла  по дескриптору PCAPFILE * pfl  уже открытого файла в  pcaprec_hdr_and_data_t * phdr
+phdr должен указывать на существующую область памяти. Возвращает 0 при ошибке
 
 
 Пример использования c  простой генерацией пакетов
@@ -82,4 +93,18 @@
   }
   lpcap_close_file( pfl );
 
+```
+
+Пример чтения пакетов из файла
+
+```
+PCAPFILE  * pfr = lpcap_open("./pcaplibtestfile.pcap");
+  pcap_hdr_t   phdr;
+  if( lpcap_read_header( pfr, &phdr ))
+  {
+    int rese_rec_read = 0 ;
+    pcaprec_hdr_and_data_t  p_rec_data;
+    do{   
+       rese_rec_read = lpcap_read_frame_record( pfr , &p_rec_data);
+    }while(rese_rec_read>0);
 ```
