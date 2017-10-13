@@ -94,3 +94,17 @@ phdr должен указывать на существующую област�
   lpcap_close_file( pfl );
 
 ```
+
+Пример чтения пакетов из файла
+
+```
+PCAPFILE  * pfr = lpcap_open("./pcaplibtestfile.pcap");
+  pcap_hdr_t   phdr;
+  if( lpcap_read_header( pfr, &phdr ))
+  {
+    int rese_rec_read = 0 ;
+    pcaprec_hdr_and_data_t  p_rec_data;
+    do{   
+       rese_rec_read = lpcap_read_frame_record( pfr , &p_rec_data);
+    }while(rese_rec_read>0);
+```
