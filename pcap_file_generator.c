@@ -72,8 +72,6 @@ PCAPFILE * lpcap_create(char * file_path )
    p_hdr_w.snaplen = 262144;
    p_hdr_w.network = 1; 
    
-
-
    PCAPFILE *f_pcp = fopen(file_path  , "wb");
    if(f_pcp)
    {
@@ -93,11 +91,10 @@ int lpcap_write_data( PCAPFILE * f_pcp ,  ethernet_data_t * eth_data, uint32_t c
    prec_frame_w.pcp_rec_hdr.ts_sec = current_seconds;
    prec_frame_w.pcp_rec_hdr.ts_usec = current_u_seconds;
 
-
    prec_frame_w.pcp_rec_hdr.orig_len =  eth_data->len;
    prec_frame_w.pcp_rec_hdr.incl_len =eth_data->len;
-
-    res_wr =  fwrite(&prec_frame_w.pcp_rec_hdr , sizeof(prec_frame_w.pcp_rec_hdr) , 1, f_pcp );
+    
+   res_wr =  fwrite(&prec_frame_w.pcp_rec_hdr , sizeof(prec_frame_w.pcp_rec_hdr) , 1, f_pcp );
     if(res_wr)
     {
            memcpy((void *)prec_frame_w.packet_data , (void *)eth_data->data ,  ( eth_data->len ));
