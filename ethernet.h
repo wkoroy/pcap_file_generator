@@ -1,6 +1,6 @@
 #ifndef ETHERNET_H
 #define ETHERNET_H
-
+//thank to  http://we.easyelectronics.ru/electro-and-pc/podklyuchenie-mikrokontrollera-k-lokalnoy-seti-udp-server.html
 #include <arpa/inet.h>
 #pragma pack(1)
 

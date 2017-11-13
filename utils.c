@@ -1,5 +1,5 @@
 #include "utils.h"
-
+//thank to  http://we.easyelectronics.ru/electro-and-pc/podklyuchenie-mikrokontrollera-k-lokalnoy-seti-udp-server.html
 // Рассчёт контрольной суммы для IP (и других протоколов)
 uint16_t ip_cksum(uint32_t sum, uint8_t *buf, size_t len)
 {
