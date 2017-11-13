@@ -15,7 +15,7 @@ PCAPFILE * lpcap_open(char * file_path )
       uint32_t magic_number = 0;
       int res_r = 0;
       res_r =  fread(&magic_number , sizeof(magic_number) , 1, f_pcp );
-      if(res_r && magic_number ==  0xa1b2c3d4)
+      if(res_r && magic_number ==   PCAP_MAGIC_NUM )
       {
         rewind(f_pcp);
         return f_pcp;

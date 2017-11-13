@@ -7,7 +7,7 @@
 
 #pragma pack(1)
 typedef FILE  PCAPFILE;
-
+#define PCAP_MAGIC_NUM 0xa1b2c3d4
 typedef struct ethernet_data_s {
         uint32_t len;   
         uint8_t *data;

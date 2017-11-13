@@ -40,7 +40,7 @@ void  build_udp_frame(eth_frame_t * eth_f , network_packet_frame_t *nwp )
 PCAPFILE * lpcap_create(char * file_path )
 {
    pcap_hdr_t  p_hdr_w;
-   p_hdr_w.magic_number = 0xa1b2c3d4;
+   p_hdr_w.magic_number = PCAP_MAGIC_NUM;
    p_hdr_w.version_major   = 2;
    p_hdr_w.version_minor   = 4 ;
    p_hdr_w.thiszone = 0;
