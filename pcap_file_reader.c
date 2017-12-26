@@ -44,18 +44,23 @@ int   lpcap_read_header(PCAPFILE * f_pcp , pcap_hdr_t * phdr)
 
 int  lpcap_read_frame_record(PCAPFILE * pfl , pcaprec_hdr_and_data_t * phdr)
 { 
-  if(! pfl ) return 0;
-  if(feof( pfl ))
+  int res_rd  = 0;
+  if(! pfl ) 
+          return 0;
+  int fs = fseek(pfl , 0 ,SEEK_CUR);
+  if(!fs) // if file already closed
   {
-        fclose(pfl);
-         return 0;
+     if(feof( pfl ) )
+     {     
+       fclose(pfl);
+       return 0;
+     }
+    res_rd =  fread(&phdr->pcp_rec_hdr , sizeof(phdr->pcp_rec_hdr) ,1,pfl );
+    if( res_rd  && phdr->pcp_rec_hdr.incl_len )
+    {
+      res_rd &= fread(&phdr->packet_data,  phdr->pcp_rec_hdr.incl_len ,1,pfl );
+    }
   }
-  int res_rd =  fread(&phdr->pcp_rec_hdr , sizeof(phdr->pcp_rec_hdr) ,1,pfl );
-  if( res_rd  && phdr->pcp_rec_hdr.incl_len )
-  {
-     res_rd &= fread(&phdr->packet_data,  phdr->pcp_rec_hdr.incl_len ,1,pfl );
-  }
-  
   return res_rd;
 }
 

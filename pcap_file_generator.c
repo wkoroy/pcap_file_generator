@@ -60,6 +60,19 @@ PCAPFILE * lpcap_create(char * file_path )
    return NULL; 
 }
 
+
+int lpcap_write_pack( PCAPFILE * f_pcp ,  pcaprec_hdr_and_data_t  *prec_frame_w)
+{
+   int res_wr = 0;
+  
+    res_wr =  fwrite(&prec_frame_w->pcp_rec_hdr , sizeof(prec_frame_w->pcp_rec_hdr) , 1, f_pcp );
+    if(res_wr)
+    {
+           res_wr &=  fwrite(prec_frame_w->packet_data , prec_frame_w->pcp_rec_hdr.orig_len , 1, f_pcp ); 
+    } 
+   return res_wr;
+}
+
 int lpcap_write_data( PCAPFILE * f_pcp ,  ethernet_data_t * eth_data, uint32_t current_seconds, uint32_t current_u_seconds)
 {
    int res_wr = 0;
@@ -83,6 +96,7 @@ void lpcap_close_file( PCAPFILE * f_pcp )
 {
     if(f_pcp)
     {
+       fflush( f_pcp );
        fclose( f_pcp );
     }
 }
