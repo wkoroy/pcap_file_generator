@@ -1,21 +1,19 @@
-APP = ./pcap_file_generator
+LIB = ./libpcap_file_generator.a
 CC=gcc
 CFLAGS=-ldl -lrt -lpthread -Wall -Wextra
+AR=ar
+all: $(LIB)
 
-all: $(APP)
+$(LIB): pcap_file_generator.o pcap_file_reader.o utils.o
+	$(AR) r $(LIB) pcap_file_generator.o pcap_file_reader.o utils.o
 
-$(APP): sample.o  pcap_file_generator.o pcap_file_reader.o utils.o
-	$(CC) sample.o pcap_file_generator.o pcap_file_reader.o utils.o -o $(APP) $(CFLAGS)
-sample.o: sample.c	
-	$(CC) sample.c -c -Wall
-
-pcap_file_generator.o: pcap_file_generator.c	
-	$(CC) pcap_file_generator.c -c -Wall
+pcap_file_generator.o: pcap_file_generator.c 	
+	$(CC) pcap_file_generator.c -c -Wall  $(CFLAGS)  
 
 pcap_file_reader.o: pcap_file_reader.c
-	$(CC) pcap_file_reader.c -c -Wall
+	$(CC) pcap_file_reader.c -c -Wall $(CFLAGS)
 
 utils.o: utils.c
-	$(CC) utils.c -c -Wall
+	$(CC) utils.c -c -Wall $(CFLAGS)
 clean:
-	rm -f *.o ; rm $(APP)
+	rm -f *.o ; rm $(LIB)

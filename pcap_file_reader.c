@@ -4,8 +4,8 @@
   *  Пт. окт. 6 15:32:33 MSK 2017
   *****************************/
 
-#include "pcap_file_reader.h"
-#include "ethernet.h"
+#include "libpcap_file_generator.h"
+
  
 PCAPFILE * lpcap_open(char * file_path )
 {

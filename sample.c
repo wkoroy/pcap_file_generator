@@ -1,6 +1,5 @@
-#include "pcap_file_generator.h"
-#include "ethernet.h"
-#include "pcap_file_reader.h"
+#include "libpcap_file_generator.h"
+
 
 #include <stdio.h>
 #include <string.h>

@@ -4,10 +4,8 @@
   *  Пт. окт. 6 15:32:33 MSK 2017
   *****************************/
 
-#include "pcap_file_generator.h"
-#include "ethernet.h"
-#include "utils.h" 
-
+#include "libpcap_file_generator.h"
+ 
 // build ethernet frame
 void  build_udp_frame(eth_frame_t * eth_f , network_packet_frame_t *nwp )
 {
