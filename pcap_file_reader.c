@@ -64,3 +64,31 @@ int  lpcap_read_frame_record(PCAPFILE * pfl , pcaprec_hdr_and_data_t * phdr)
   return res_rd;
 }
 
+
+int  lpcap_setpos_frame_record(PCAPFILE * pfl , pcaprec_hdr_t *pcp_rec_hdr, long record_num)
+{ 
+  int res_rd  = 0;
+  if(! pfl ) 
+          return 0;
+          
+  rewind(pfl);
+  fseek( pfl ,sizeof(pcap_hdr_t), SEEK_SET);
+  long current_rec_num = 0;
+  while(current_rec_num < record_num)
+  {
+    res_rd =  fread( pcp_rec_hdr , sizeof(pcp_rec_hdr[0]) ,1,pfl );
+    if( res_rd  && pcp_rec_hdr->incl_len )
+    {
+      long fpos = ftell( pfl );
+      fpos+=  pcp_rec_hdr->incl_len;
+      fseek( pfl ,fpos, SEEK_SET);
+    }
+    else
+    {
+      if(res_rd<=0) break;
+    }
+    current_rec_num++;
+  }
+  return res_rd;
+}
+

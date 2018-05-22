@@ -142,6 +142,7 @@ void  build_udp_frame(eth_frame_t * eth_f , network_packet_frame_t *nwp );
 PCAPFILE * lpcap_open(char * file_path );
 int   lpcap_read_header(PCAPFILE * pfl , pcap_hdr_t * phdr);
 int  lpcap_read_frame_record(PCAPFILE * pfl , pcaprec_hdr_and_data_t * phdr);
+int  lpcap_setpos_frame_record(PCAPFILE * pfl , pcaprec_hdr_t *pcp_rec_hdr, long record_num);
 PCAPFILE * lpcap_create(char * file_path );
 int lpcap_write_data( PCAPFILE * f_pcp ,  ethernet_data_t * eth_data, uint32_t current_seconds, uint32_t current_u_seconds);
 int lpcap_write_pack( PCAPFILE * f_pcp ,  pcaprec_hdr_and_data_t  *prec_frame_w);

@@ -68,6 +68,9 @@ int main()
   PCAPFILE * pfl = lpcap_create("./pcaplibtestfile.pcap");
   for( i=0;i< PKTS_COUNT;i++ )
   {
+   memset(npf.data,i,sizeof(tdata));
+   build_udp_frame(eth_f , &npf ); // convert network_packet_frame_t to  eth_frame_t
+   eda.data = (void *) eth_f;
    lpcap_write_data( pfl , &eda , i, 0 );
   }
   lpcap_close_file( pfl );
@@ -78,11 +81,22 @@ int main()
     print_hdr(&phdr);
     int rese_rec_read = 0 ;
     pcaprec_hdr_and_data_t  p_rec_data;
+    //int  lpcap_setpos_frame_record(PCAPFILE * pfl , pcaprec_hdr_and_data_t * phdr, long record_num);
+     pcaprec_hdr_t pcp_rh;
+     lpcap_setpos_frame_record(pfr,&pcp_rh,250);
+     rese_rec_read = lpcap_read_frame_record( pfr , &p_rec_data);
+     printf(" 1 buf %d ",p_rec_data.packet_data[80]);
+     
+    
     do{   
        rese_rec_read = lpcap_read_frame_record( pfr , &p_rec_data);
        print_rec_hdr( &p_rec_data.pcp_rec_hdr);
+       printf("      buf %d \n",p_rec_data.packet_data[80]);
     }while(rese_rec_read>0);
-  } 
+     
+  }
+  
+   
 
  return 0;
 }
