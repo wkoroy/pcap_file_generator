@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdint.h>
-
+ 
 #pragma pack(1)
 typedef FILE  PCAPFILE;
 #define PCAP_MAGIC_NUM 0xa1b2c3d4
@@ -137,6 +137,9 @@ typedef struct network_packet_frame {
 	uint16_t data_len;	
 } network_packet_frame_t;
 
+#ifdef __cplusplus
+extern "C"{
+#endif 
 void  build_udp_frame(eth_frame_t * eth_f , network_packet_frame_t *nwp );
 ///////////////////////////////////////////// libpcap_file_generator functions
 PCAPFILE * lpcap_open(char * file_path );
@@ -148,5 +151,7 @@ int lpcap_write_data( PCAPFILE * f_pcp ,  ethernet_data_t * eth_data, uint32_t c
 int lpcap_write_pack( PCAPFILE * f_pcp ,  pcaprec_hdr_and_data_t  *prec_frame_w);
 void lpcap_close_file( PCAPFILE * f_pcp);
 uint16_t ip_cksum(uint32_t sum, uint8_t *buf, size_t len);
-
+#ifdef __cplusplus
+}
+#endif
 #endif
