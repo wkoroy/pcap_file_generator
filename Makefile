@@ -1,6 +1,6 @@
 LIB = ./libpcap_file_generator.a
 CC=gcc
-CFLAGS=-ldl -lrt -lpthread -Wall -Wextra
+CFLAGS=-D_FILE_OFFSET_BITS=64  -ldl -lrt -lpthread -Wall -Wextra
 AR=ar
 all: $(LIB)
 

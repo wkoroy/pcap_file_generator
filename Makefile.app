@@ -1,6 +1,6 @@
 APP = ./pcap_file_generator
 CC=gcc
-CFLAGS=-ldl -lrt -lpthread -Wall -Wextra
+CFLAGS= -D_FILE_OFFSET_BITS=64 -ldl -lrt -lpthread -Wall -Wextra
 
 all: $(APP)
 

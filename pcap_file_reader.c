@@ -47,9 +47,7 @@ int  lpcap_read_frame_record(PCAPFILE * pfl , pcaprec_hdr_and_data_t * phdr)
   int res_rd  = 0;
   if(! pfl ) 
           return 0;
-  int fs = fseek(pfl , 0 ,SEEK_CUR);
-  if(!fs) // if file already closed
-  {
+  
      if(feof( pfl ) )
      {     
        fclose(pfl);
@@ -60,7 +58,7 @@ int  lpcap_read_frame_record(PCAPFILE * pfl , pcaprec_hdr_and_data_t * phdr)
     {
       res_rd &= fread(&phdr->packet_data,  phdr->pcp_rec_hdr.incl_len ,1,pfl );
     }
-  }
+  
   return res_rd;
 }
 
