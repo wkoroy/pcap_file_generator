@@ -23,3 +23,4 @@ uint16_t ip_cksum(uint32_t sum, uint8_t *buf, size_t len)
     // Снова конвертируем в big endian и берём дополнение
     return ~htons((uint16_t)sum);
 }
+
