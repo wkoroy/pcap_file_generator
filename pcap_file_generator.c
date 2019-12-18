@@ -22,6 +22,7 @@ void  build_udp_frame(eth_frame_t * eth_f , network_packet_frame_t *nwp )
   ip_f->flags_framgent_offset = 0;
   ip_f->ttl = 64;
   ip_f->protocol = IP_PROTOCOL_UDP;
+  ip_f->cksum = 0;
   ip_f->cksum = ip_cksum(0, (void*)ip_f, sizeof(ip_packet_t));
   ip_f->from_addr=inet_addr( nwp->src_ip );
   ip_f->to_addr= inet_addr( nwp->dst_ip );
@@ -30,6 +31,7 @@ void  build_udp_frame(eth_frame_t * eth_f , network_packet_frame_t *nwp )
   udp_f->from_port = htons( nwp->src_port );
   udp_f->to_port = htons( nwp->dst_port );  
   udp_f->len = htons(data_len);
+  udp_f->cksum = 0;
   udp_f->cksum = ip_cksum(0, (void*)udp_f, sizeof(udp_packet_t));
   memcpy(udp_f->data, nwp->data, nwp->data_len);
   return; 
